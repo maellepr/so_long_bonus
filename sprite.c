@@ -6,7 +6,7 @@
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/27 15:12:46 by mapoirie          #+#    #+#             */
-/*   Updated: 2023/08/02 14:11:42 by mapoirie         ###   ########.fr       */
+/*   Updated: 2023/08/03 14:07:59 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ void	init_sprite(t_game *game, t_sprite *sprite, t_img *img, int t)
 	sprite->frame = malloc(sizeof(t_list));
 	if (!sprite->frame)
 	{
+		write (2, "Error\nFailed to create a sprite\n", 32);
 		sprite->frame = NULL;
-		//ajouter protect
+		ft_exit(game);
 	}
 	sprite->update_time = t;
 	sprite->time = 0;
@@ -31,33 +32,47 @@ void	init_sprite(t_game *game, t_sprite *sprite, t_img *img, int t)
 	create_frames(game, img, temp, sprite);
 }
 
-t_img	*slice_sprite(t_game *game, t_img *img, t_sprite *sprite, t_point coord)//slice sprite1-2
+t_img	*slice_sprite(t_game *game, t_img *img, t_sprite *sprite, t_point coord)
 {
 	t_img	*frame;
-	int		i;
-	int		j;
 
 	frame = ft_calloc(sizeof(t_img), 1);
 	if (!frame)
 	{
 		free(sprite->frame);
 		sprite->frame = NULL;
-		write(2, "Erreur\nUne frame n'a pas pu etre creee\n", 39);
-		ft_exit(game);// ajouter plus de protections 
+		write(2, "Error\nFailed to create a frame\n", 31);
+		ft_exit(game);
 	}
+	new_img_ptr(frame, sprite->w, sprite->h, game);
+	if (!frame->img_ptr)
+	{
+		free(frame);
+		free(sprite->frame);
+		sprite->frame = NULL;
+		ft_exit(game);
+	}
+	slice_sprite2(frame, img, coord, sprite);
+	return (frame);
+}
+
+void	slice_sprite2(t_img *frame, t_img *img, t_point coord, t_sprite *sprite)
+{
+	int	i;
+	int	j;
+
 	i = 0;
-	new_img_ptr(frame, sprite->w, sprite->h, game);// va chercher l'image totale
-	while (i < sprite->w)// affiche une partie de l'image selon les coordonnees envoyees 
+	while (i < sprite->w)
 	{
 		j = 0;
 		while (j < sprite->h)
 		{
-			put_pixel_img_sprite(frame, i, j, get_pixel_img(*img, coord.x + i, coord.y + j));//coord.x + i, coord.y + j
+			put_pixel_img_sprite(frame, i, j, \
+			get_pixel_img(*img, coord.x + i, coord.y + j));
 			j++;
 		}
 		i++;
 	}
-	return (frame);
 }
 
 void	create_frames(t_game *game, t_img *img, t_list *temp, t_sprite *sprite)
@@ -68,27 +83,20 @@ void	create_frames(t_game *game, t_img *img, t_list *temp, t_sprite *sprite)
 	i = 0;
 	coord.x = 0;
 	coord.y = sprite->h;
-	// coord.x = sprite->w;
-	// coord.y = 0;
 	while (i < (sprite->nb_frames))
 	{
-		temp->next = ft_lstnew(slice_sprite(game, img, sprite, (t_point){coord.x, coord.y}));
+		temp->next = ft_lstnew(slice_sprite(game, img, sprite, \
+		(t_point){coord.x, coord.y}));
 		if (!temp->next)
 			ft_exit(game);
 		temp = temp->next;
-		// if (coord.x > game->perso.width)
-		// {
-		// 	coord.x += sprite->w;
-		// 	coord.y = 0;
-		// }
 		coord.y += sprite->h;
-		// coord.x += sprite->w;
 		i++;
 	}
 }
 
-
-void	update_sprite(t_game *game, t_sprite *sprite, t_list *frame, t_point coord)
+void	update_sprite(t_game *game, t_sprite *sprite, t_list *frame, \
+t_point coord)
 {
 	t_list	*temp;
 	t_img	img;
@@ -101,7 +109,7 @@ void	update_sprite(t_game *game, t_sprite *sprite, t_list *frame, t_point coord)
 		sprite->cur_nb++;
 		sprite->cur_nb %= ft_lstsize(frame);
 		img = *(t_img *)ft_lstgetlast(temp, sprite->cur_nb)->content;
-		put_img_to_img(game->image_base, img, coord.x * 40, coord.y * 40 - 12);// p etre h et w a echanger
+		put_img_to_img(game->image_base, img, coord.x * 40, coord.y * 40 - 12);
 	}
 	else
 	{

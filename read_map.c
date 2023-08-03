@@ -6,7 +6,7 @@
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 12:49:13 by mapoirie          #+#    #+#             */
-/*   Updated: 2023/08/02 17:11:33 by mapoirie         ###   ########.fr       */
+/*   Updated: 2023/08/03 14:48:09 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	count_line_fd(char *av1)
 {
 	int		fd;
-	int 	nb_line;
+	int		nb_line;
 	char	*line;
 
 	fd = open(av1, O_RDONLY);
@@ -29,8 +29,8 @@ int	count_line_fd(char *av1)
 		nb_line++;
 		if (nb_line > 2147483647 || nb_line < 0)
 		{
-			write(2, "Erreur ! la map a trop de lignes\n", 33);
-			exit(EXIT_FAILURE);
+			write(2, "Error\nToo many lines\n", 21);
+			exit(0);
 		}
 		line = get_next_line(fd);
 	}
@@ -41,7 +41,7 @@ int	count_line_fd(char *av1)
 
 char	**read_map(char *av1)
 {
-	int 	fd;
+	int		fd;
 	int		nb_line;
 	int		i;
 	char	**map;
@@ -58,11 +58,11 @@ char	**read_map(char *av1)
 		if (map[i] == NULL)
 		{
 			ft_free_map(map);
-			exit(0);
+			return (NULL);
 		}
 		i++;
 	}
 	close (fd);
 	map[nb_line] = 0;
 	return (map);
-}// faire cas d'erreur pour les maps
+}

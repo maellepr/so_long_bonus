@@ -6,7 +6,7 @@
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 16:29:55 by mapoirie          #+#    #+#             */
-/*   Updated: 2023/08/02 17:17:34 by mapoirie         ###   ########.fr       */
+/*   Updated: 2023/08/03 15:04:12 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,14 @@ int	count_colomn(char **map)
 
 int	count_digit(int nbr)
 {
-	int digit = 0;
+	int	digit;
 
+	digit = 0;
 	if (nbr == 0)
 		return (1);
 	if (nbr < 0)
 	{
-		nbr = - nbr;
+		nbr = -nbr;
 		digit += 1;
 	}
 	while (nbr > 0)
@@ -55,18 +56,20 @@ int	count_digit(int nbr)
 
 char	*ft_itoa(int nbr)
 {
-	int			digit = 0;
-	int			i = 0;
+	int		digit;
+	int		i;
+	char	*str;
 
+	i = 0;
 	digit = count_digit(nbr);
-	char	*str = malloc(sizeof(char) * digit + 1);// ajouter securite
+	str = malloc(sizeof(char) * digit + 1);
 	if (!str || nbr < 0 || nbr > 2147483647)
 		return (NULL);
 	i = digit - 1;
 	while (i >= 0)
 	{
 		str[i] = nbr % 10 + '0';
-		nbr /= 10; 
+		nbr /= 10;
 		i--;
 	}
 	str[digit] = '\0';

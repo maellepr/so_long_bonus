@@ -6,7 +6,7 @@
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 13:35:26 by mapoirie          #+#    #+#             */
-/*   Updated: 2023/08/02 15:14:43 by mapoirie         ###   ########.fr       */
+/*   Updated: 2023/08/03 14:56:07 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	check_p(char **map)
 {
-	int i;
+	int	i;
 	int	j;
 	int	p;
 
@@ -33,15 +33,15 @@ void	check_p(char **map)
 	}
 	if (p == 0 || p > 1)
 	{
-		write (2, "Erreur\nLa map contient 0 ou plusieurs personnages\n", 52);
+		write (2, "Error\nThere is none or several P on the map\n", 44);
 		ft_free_map(map);
-		exit (EXIT_FAILURE);
+		exit (0);
 	}
 }
 
 void	check_e(char **map)
 {
-	int i;
+	int	i;
 	int	j;
 	int	e;
 
@@ -60,15 +60,15 @@ void	check_e(char **map)
 	}
 	if (e == 0 || e > 1)
 	{
-		write (2, "Erreur\nLa map contient 0 ou plusieurs sorties\n", 48);
+		write (2, "Error\nThere is none or several E on the map\n", 44);
 		ft_free_map(map);
-		exit (EXIT_FAILURE);
+		exit (0);
 	}
 }
 
 void	check_c(char **map)
 {
-	int i;
+	int	i;
 	int	j;
 	int	c;
 
@@ -87,23 +87,23 @@ void	check_c(char **map)
 	}
 	if (c == 0)
 	{
-		write (2, "Erreur\nLa map ne contient pas d'item\n", 37);
+		write (2, "Error\nThere is no C on the map\n", 31);
 		ft_free_map(map);
-		exit (EXIT_FAILURE);
+		exit (0);
 	}
 }
 
 void	quit_border(char **map)
 {
-	write (2, "Erreur\nLa map n'est pas valide\nRefaire l'encadrement\n", 53);
+	write (2, "Error\nInvalid map, please redo the frame\n", 41);
 	ft_free_map(map);
-	exit (EXIT_FAILURE);
+	exit (0);
 }
 
 void	check_border(char **map)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
@@ -114,7 +114,7 @@ void	check_border(char **map)
 			if (map[i][0] != '1')
 				quit_border(map);
 			if (map[i][count_colomn(map) - 1] != '1' )
-				quit_border(map);	
+				quit_border(map);
 			if (map[0][j] != '1')
 				quit_border(map);
 			if (map[count_line(map) - 1][j] != '1')

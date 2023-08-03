@@ -6,7 +6,7 @@
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/26 14:31:41 by mapoirie          #+#    #+#             */
-/*   Updated: 2023/07/27 11:12:41 by mapoirie         ###   ########.fr       */
+/*   Updated: 2023/08/03 12:44:53 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	ft_putnbr(int nb)
 	if (nb > 9)
 		ft_putnbr(nb / 10);
 	ft_putchar(nb % 10 + '0');
-
 }
 
 void	count_move(t_game *game)
@@ -30,9 +29,6 @@ void	count_move(t_game *game)
 	game->move += 1;
 	ft_putnbr(game->move);
 	write (1, "\n", 1);
-	// printf("nb move = %d\n", game->move);
-	// printf("nb collecte = %d\n", game->co);
-	// printf("nb total = %d\n", game->init_co);
 }
 
 int	count_collec(t_game *game)
@@ -40,7 +36,7 @@ int	count_collec(t_game *game)
 	int	i;
 	int	j;
 	int	c;
-	
+
 	i = 0;
 	c = 0;
 	while (game->map_ptr->content[i])
@@ -49,8 +45,8 @@ int	count_collec(t_game *game)
 		while (game->map_ptr->content[i][j])
 		{
 			if (game->map_ptr->content[i][j] == 'C')
-				c++;			
-			j++;	
+				c++;
+			j++;
 		}
 		i++;
 	}

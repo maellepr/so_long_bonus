@@ -6,7 +6,7 @@
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/19 10:23:26 by mapoirie          #+#    #+#             */
-/*   Updated: 2023/07/19 13:49:35 by mapoirie         ###   ########.fr       */
+/*   Updated: 2023/08/03 14:41:18 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,11 @@ char	**make_copy(char **map)
 	while (i < count_line(map))
 	{
 		map_cpy[i] = str_cpy(map[i]);
+		if (!map_cpy[i])
+		{
+			ft_free_map(map_cpy);
+			exit(0);
+		}
 		i++;
 	}
 	map_cpy[i] = 0;
@@ -52,7 +57,7 @@ t_point	pos_perso(char **map)
 {
 	int		i;
 	int		j;
-	t_point pos;
+	t_point	pos;
 
 	i = 0;
 	pos.x = 0;
@@ -66,7 +71,6 @@ t_point	pos_perso(char **map)
 			{
 				pos.x = i;
 				pos.y = j;
-				// printf("map[%d][%d]\n", i, j);
 				return (pos);
 			}
 			j++;

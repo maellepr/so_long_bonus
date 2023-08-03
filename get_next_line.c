@@ -6,7 +6,7 @@
 /*   By: mapoirie <mapoirie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/14 12:58:01 by mapoirie          #+#    #+#             */
-/*   Updated: 2023/07/14 15:18:43 by mapoirie         ###   ########.fr       */
+/*   Updated: 2023/08/03 13:36:48 by mapoirie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ char	*ft_line_maker(int fd, char *buf, char *storage)
 {
 	int		nb_read;
 	char	*temp;
-	
+
 	nb_read = read(fd, buf, BUFFER_SIZE);
-	while(nb_read > 0)
+	while (nb_read > 0)
 	{
 		buf[nb_read] = '\0';
 		if (!storage)
